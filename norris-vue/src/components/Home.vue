@@ -16,11 +16,14 @@
     </div>
 
     <h2 class="title">{{msg}}</h2>
-    <img class="image" src="../assets/Chuck-Norris-HD.jpg">
+    <!-- <img class="image" src="../assets/Chuck-Norris-HD.jpg"> -->
     <rjoke v-bind:testing="testing" v-bind:selectedCategories="passedCategories"></rjoke>
     <hr />
     <Cat v-bind:testing="testing">
     </Cat>
+
+    <jokeList></jokeList>
+
   </div>
 </template>
 
@@ -28,13 +31,15 @@
 import Categories from './Categories'
 import RandomJoke from './Joke'
 import Video from './Video'
+import JokeList from './JokeList'
 
 export default {
   name: 'Home',
   components: {
     Cat: Categories,
     rjoke: RandomJoke,
-    coolVideo: Video
+    coolVideo: Video,
+    jokeList: JokeList
   },
 
   data () {
