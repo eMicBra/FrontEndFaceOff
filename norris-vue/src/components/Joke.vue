@@ -3,7 +3,7 @@
     <div class="joke container">
       <div class="row">
         <div class="col-md-12">
-          <h2>{{ msg }}</h2>
+          <h2>{{ currentJoke.value }}</h2>
         </div>
       </div>
       <div class="row">
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { JokeItem } from '../model/Joke'
 import JokeRepo from '../model/JokeRepo'
 
 export default {
@@ -41,14 +42,15 @@ export default {
     return {
       msg: 'Pick a Category below',
       randomJokeEnabled: true, // bound to the button
-      randomCategory: '' // holds the current category to pass to the service
+      randomCategory: '', // holds the current category to pass to the service
+      currentJoke: {}
     }
   },
 
   watch: { // watching for change so when toggled and on it will get the next joke
     randomJokeEnabled: {
       handler: function (val, oldVal) {
-      console.log('switch worked')
+      // console.log('switch worked')
         if (val) {
           this.getJoke()
         }
@@ -65,14 +67,24 @@ export default {
     },
 
     getJoke () {
-      console.log("joke get joke")
-
-      var repo = new JokeRepo(this.testing);  
-      this.msg = repo.getJoke(); // "Project Journal starting"  
-    },
+      let vm = this
+      // console.log("joke get joke")
+      var repo = new JokeRepo(this.testing); 
+      console.log(`prepare to get joke:`)
+      // this is where we get a joke from the repo, set the current one to the one returned.  
+      // var joke = repo.getJoke(this.randomCategory); // "Project Journal starting"  
+      repo.getJoke(this.randomCategory).then(function (joke) {
+        vm.currentJoke = joke
+        console.log(`got joke: ${joke.value}`)
+      })
+    }
   },
 
   created () {
+
+    this.currentJoke = new JokeItem(1, 'Pick a Category below') 
+          // console.log(`creating joke: ${this.value}`)
+
     this.getJoke()
 
     // Requirement #4
