@@ -46,7 +46,7 @@ export default {
     return {
       msg: 'Chuck Norris Vue(s)',
       testing: true,
-      passedCategories: ['pig','cow']
+      passedCategories: ['pig', 'cow']
     }
   }
 }

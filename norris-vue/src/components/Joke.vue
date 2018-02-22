@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { JokeItem } from '../model/Joke'
 import JokeRepo from '../model/JokeRepo'
 
 export default {
@@ -69,10 +68,7 @@ export default {
     getJoke () {
       let vm = this
       // console.log("joke get joke")
-      var repo = new JokeRepo(this.testing); 
-      console.log(`prepare to get joke:`)
-      // this is where we get a joke from the repo, set the current one to the one returned.  
-      // var joke = repo.getJoke(this.randomCategory); // "Project Journal starting"  
+      var repo = new JokeRepo(this.testing)
       repo.getJoke(this.randomCategory).then(function (joke) {
         vm.currentJoke = joke
         console.log(`got joke: ${joke.value}`)
@@ -81,10 +77,7 @@ export default {
   },
 
   created () {
-
-    this.currentJoke = new JokeItem(1, 'Pick a Category below') 
-          // console.log(`creating joke: ${this.value}`)
-
+    // console.log(`creating joke: ${this.value}`)
     this.getJoke()
 
     // Requirement #4
