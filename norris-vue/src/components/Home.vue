@@ -17,12 +17,12 @@
 
     <h2 class="title">{{msg}}</h2>
     <!-- <img class="image" src="../assets/Chuck-Norris-HD.jpg"> -->
-    <rjoke v-bind:testing="testing" v-bind:selectedCategories="passedCategories" v-bind:jokeList="jokeList"></rjoke>
+    <rjoke v-on:add-joke="addJoke" v-bind:testing="testing" v-bind:selectedCategories="passedCategories" v-bind:jokeList="jokeList"></rjoke>
     <hr />
     <Cat v-bind:testing="testing">
     </Cat>
 
-    <jokeList></jokeList>
+    <history v-bind:jokeList="jokeList"></history>
 
   </div>
 </template>
@@ -31,7 +31,7 @@
 import Categories from './Categories'
 import RandomJoke from './Joke'
 import Video from './Video'
-import JokeList from './JokeList'
+import History from './History'
 
 export default {
   name: 'Home',
@@ -39,7 +39,7 @@ export default {
     Cat: Categories,
     rjoke: RandomJoke,
     coolVideo: Video,
-    jokeList: JokeList
+    history: History
   },
 
   data () {
