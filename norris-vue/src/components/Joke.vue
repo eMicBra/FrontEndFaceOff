@@ -36,7 +36,10 @@ export default {
       default: () => ([])
     },
     testing: true, // if true it will use mock service to enable offline development
-    jokeList: []
+    jokeList: {
+      type: Array,
+      default: () => ([])
+    }
   },
 
   data () {
@@ -45,7 +48,7 @@ export default {
       randomJokeEnabled: true, // bound to the button
       randomCategory: '', // holds the current category to pass to the service
       currentJoke: {},
-      moveIndex: 0,
+      moveIndex: 0
     }
   },
 
@@ -92,7 +95,7 @@ export default {
       repo.getJoke(this.randomCategory).then(function (joke) {
         vm.currentJoke = joke
         // vm.jokeList.push(joke)
-        this.$emit('add-joke', joke) // notify the parent that there is a new joke
+        vm.$emit('add-joke', joke) // notify the parent that there is a new joke
         vm.moveIndex = vm.jokeList.length - 1
         console.log(`got joke: ${joke.value}`)
       })

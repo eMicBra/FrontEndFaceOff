@@ -4,23 +4,21 @@
       <table id="buildingJokes" class="table table-striped table-hover table-condensed">
         <thead>
           <tr>
-            <th style="text-align:left">Joke Name</th>
-            <th>Year Built</th>
-            <th>Year Last Modernized</th>
-            <th>Gross SqFt</th>
-            <th>Instructional SqFt</th>
-            <th>SCAP SqFt</th>
-            <th>Occupancy Date</th>
-            <th>Board Accept Date</th>
+            <th style="text-align:left">Id</th>
+            <th>Value</th>
+            <th>Category</th>
+            <th>URL</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           <!--
           // es6lint-disable-next-line -->
-          <tr v-for="joke in jokes">
-            <td style="text-align:left;">{{joke.Name}}</td>
-            <td>{{joke.YearLastRenovated}}</td>
+          <tr v-for="joke in jokeList">
+            <td style="text-align:left;">{{joke.id}}</td>
+            <td>{{joke.value}}</td>
+            <td>{{joke.category}}</td>
+            <td>{{joke.url}}</td>
             <!-- <td>{{joke.YearBuilt}}</td>
             <td>{{joke.YearLastRenovated}}</td>
             <td>{{joke.GrossSqFt | utilNumberWithCommas }}</td>
@@ -45,6 +43,7 @@
 <script>
 // import { icosIcons, icosMixins, icosDialogs, icosModels } from '../../icos-resources'
 // import jokeDialog from './building-inventory-dialog'
+// import { JokeItem } from '../model/Joke'
 
 export default {
   name: 'joke-list',
@@ -59,20 +58,25 @@ export default {
     // jokeEditDialog: jokeDialog,
   },
 
-  props: ['buildingId'],
+  props: {
+    buildingId: 0,
+    jokeList: {
+      type: Array,
+      default: () => ([])
+    }
+  },
 
   data () {
     return {
       inventory: {},
-      jokes: [],
-      activeJoke: null,
+      // activeJoke: null,
       operation: 'Add Joke'
     }
   },
 
   computed: {
     jokesExist () {
-      return this.jokes.length > 0
+      return this.jokeList.length > 0
     }
   },
 
