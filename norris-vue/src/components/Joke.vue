@@ -1,16 +1,16 @@
 <template>
   <div>
-    <div class="joke container">
-      <div class="row">
-        <div class="col-md-12">
+    <div class="outerJokeContainer">
+        <button class="btn move" v-on:click="goBack">Prev</button>
+      <div class="innerJokeContainer">
+        <div>
           <h2>{{ currentJoke.value }}</h2>
         </div>
-      </div>
-      <div class="row">
-        <div class="offset-md-10 col-md-2">
-          <!-- {{ randomCategory }}  -->{{selectedCategories}} -- cats
+        <div class="jokecategory">
+          <!-- {{ randomCategory }}  -->{{selectedCategories}}
         </div>
       </div>
+        <button class="btn move" v-on:click="goNext">Next</button>
     </div>
     <div class="switchContainer">
       <toggle-button id="jokeSwitch"
@@ -20,6 +20,7 @@
           :labels="{checked: 'NORRIS JOKES ON!!!', unchecked: 'I can not take anymore'}"
           />
     </div>
+    index {{moveIndex}}
   </div>
 </template>
 
@@ -42,7 +43,9 @@ export default {
       msg: 'Pick a Category below',
       randomJokeEnabled: true, // bound to the button
       randomCategory: '', // holds the current category to pass to the service
-      currentJoke: {}
+      currentJoke: {},
+      moveIndex: 0,
+      jokeList: []
     }
   },
 
@@ -58,6 +61,23 @@ export default {
   },
 
   methods: {
+    goBack () { 
+        this.moveIndex--
+        this.go()
+    },
+    goNext () { 
+        this.moveIndex++
+        this.go()
+    },
+    go () { 
+        if (this.moveIndex < 0) {
+          this.moveIndex = 0
+        }
+        if (this.moveIndex > this.jokeList.length -1 ) {
+          this.moveIndex = this.jokeList.length - 1
+        }
+          this.currentJoke = this.jokeList[this.moveIndex]
+    },
     jokeOn () { // method will determine if call to api should be made
       if (this.randomJokeEnabled) { // toggle must be on, maybe check for at least one category selected
         return true
@@ -71,6 +91,8 @@ export default {
       var repo = new JokeRepo(this.testing)
       repo.getJoke(this.randomCategory).then(function (joke) {
         vm.currentJoke = joke
+        vm.jokeList.push(joke)
+        vm.moveIndex = vm.jokeList.length - 1
         console.log(`got joke: ${joke.value}`)
       })
     }
@@ -100,17 +122,31 @@ export default {
     font-weight: normal;
   }
 
-  .joke {
-    padding: 15px;
+  .outerJokeContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     background-color: #222;
+    min-height: 220px;
+  }
+
+  .innerJokeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 15px;
+  }
+
+  .jokecategory {
+    align-self: flex-end;
   }
 
   .switchContainer {
     padding-top: 10px;
   }
 
-  a {
-    color: #42b983;
+  .move {
+    background-color: #42b983;
   }
 
   .vue-js-switch#jokeSwitch {
