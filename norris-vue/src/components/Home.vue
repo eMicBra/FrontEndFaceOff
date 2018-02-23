@@ -17,7 +17,7 @@
 
     <h2 class="title">{{msg}}</h2>
     <!-- <img class="image" src="../assets/Chuck-Norris-HD.jpg"> -->
-    <rjoke v-bind:testing="testing" v-bind:selectedCategories="passedCategories"></rjoke>
+    <rjoke v-bind:testing="testing" v-bind:selectedCategories="passedCategories" v-bind:jokeList="jokeList"></rjoke>
     <hr />
     <Cat v-bind:testing="testing">
     </Cat>
@@ -46,9 +46,18 @@ export default {
     return {
       msg: 'Chuck Norris Vue(s)',
       testing: true,
-      passedCategories: ['pig', 'cow']
+      passedCategories: ['pig', 'cow'],
+      jokeList: [],
     }
-  }
+  }, 
+
+  methods: {
+    addJoke (joke) {
+      this.jokeList.push(joke)
+    }
+  },
+
+
 }
 </script>
 

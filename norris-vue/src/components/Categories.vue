@@ -2,6 +2,8 @@
   <div>
     <h2>Joke Categories</h2>
     <div class="container categories">
+          <!--
+          // es6lint-disable-next-line -->
       <div v-for="(cat, i) in categories">
         <toggle-button class="categorySwitch"
               v-model="cat.Include"

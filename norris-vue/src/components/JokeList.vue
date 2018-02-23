@@ -16,6 +16,8 @@
           </tr>
         </thead>
         <tbody>
+          <!--
+          // es6lint-disable-next-line -->
           <tr v-for="joke in jokes">
             <td style="text-align:left;">{{joke.Name}}</td>
             <td>{{joke.YearLastRenovated}}</td>

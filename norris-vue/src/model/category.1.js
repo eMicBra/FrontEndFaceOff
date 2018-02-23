@@ -1,30 +1,3 @@
-<template>
-  <div>
-    <div class="outerJokeContainer">
-        <button class="btn move" v-on:click="goBack">Prev</button>
-      <div class="innerJokeContainer">
-        <div>
-          <h2>{{ currentJoke.value }}</h2>
-        </div>
-        <div class="jokecategory">
-          <!-- {{ randomCategory }}  -->{{selectedCategories}}
-        </div>
-      </div>
-        <button class="btn move" v-on:click="goNext">Next</button>
-    </div>
-    <div class="switchContainer">
-      <toggle-button id="jokeSwitch"
-          v-model="randomJokeEnabled"
-          :width="250" :height="40"
-          :color="{checked: 'green', unchecked: 'gray'}"
-          :labels="{checked: 'NORRIS JOKES ON!!!', unchecked: 'I can not take anymore'}"
-          />
-    </div>
-    index {{moveIndex}}
-  </div>
-</template>
-
-<script>
 import JokeRepo from '../model/JokeRepo'
 
 export default {
@@ -35,8 +8,7 @@ export default {
       type: Array,
       default: () => ([])
     },
-    testing: true, // if true it will use mock service to enable offline development
-    jokeList: []
+    testing: true // if true it will use mock service to enable offline development
   },
 
   data () {
@@ -46,6 +18,7 @@ export default {
       randomCategory: '', // holds the current category to pass to the service
       currentJoke: {},
       moveIndex: 0,
+      jokeList: []
     }
   },
 
@@ -91,8 +64,7 @@ export default {
       var repo = new JokeRepo(this.testing)
       repo.getJoke(this.randomCategory).then(function (joke) {
         vm.currentJoke = joke
-        // vm.jokeList.push(joke)
-        this.$emit('add-joke', joke) // notify the parent that there is a new joke
+        vm.jokeList.push(joke)
         vm.moveIndex = vm.jokeList.length - 1
         console.log(`got joke: ${joke.value}`)
       })
@@ -115,46 +87,3 @@ export default {
   mounted () {
   }
 }
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  h1, h2 {
-    font-weight: normal;
-  }
-
-  .outerJokeContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: #222;
-    min-height: 220px;
-  }
-
-  .innerJokeContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 15px;
-  }
-
-  .jokecategory {
-    align-self: flex-end;
-  }
-
-  .switchContainer {
-    padding-top: 10px;
-  }
-
-  .move {
-    background-color: #42b983;
-  }
-
-  .vue-js-switch#jokeSwitch {
-    font-size: 16px !important;
-  }
-
-  .vue-js-switch {
-    margin: 2px;
-  }
-</style>
