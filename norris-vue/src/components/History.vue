@@ -1,4 +1,10 @@
 <template>
+<div role="dialog" tabindex="-1" class="modal fade show" style="display: block;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Title</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+            <div class="modal-body">
   <div class="panel panel-default">
     <div v-if="jokesExist" class="table-responsive">
       <table id="buildingJokes" class="table table-striped table-hover table-condensed">
@@ -39,6 +45,13 @@
         <joke-edit-dialog v-bind:buildingId="buildingId" v-bind:activeJoke="activeJoke" />
     </modal-edit> -->
   </div>
+      </div>
+            <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
+        </div>
+    </div>
+</div>
+
+
 </template>
 <script>
 // import { icosIcons, icosMixins, icosDialogs, icosModels } from '../../icos-resources'
@@ -147,6 +160,9 @@ export default {
 }
 </script>
 <style scoped>
+  .modal-content {
+    background-color: black;
+  }
 
   .table > tbody > tr > td,
   .table > tbody > tr > th,
