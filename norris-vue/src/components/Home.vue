@@ -17,12 +17,13 @@
 
     <h2 class="title">{{msg}}</h2>
     <img class="image" src="../assets/Chuck-Norris-HD.jpg">
-    <rjoke v-on:add-joke="addJoke" v-bind:testing="testing" v-bind:selectedCategories="passedCategories" v-bind:jokeList="jokeList"></rjoke>
+    <rjoke v-on:add-joke="addJoke" v-bind:testing="testing" v-bind:selectedCategories="passedCategories"
+            v-bind:jokeList="jokeList" ref="myJoke"></rjoke>
     <hr />
     <Cat v-bind:testing="testing">
     </Cat>
 
-    <history v-bind:jokeList="jokeList"></history>
+    <!-- <history v-bind:jokeList="jokeList"></history> -->
 
   </div>
 </template>
@@ -49,6 +50,14 @@ export default {
       passedCategories: ['pig', 'cow'],
       jokeList: []
     }
+  },
+
+  beforeRouteLeave: function (to, from, next) {
+    // Indicate to the SubComponent that we are leaving the route
+    this.$refs.myJoke.prepareToExit()
+    // Make sure to always call the next function, otherwise the hook will never be resolved
+    // Ref: https://router.vuejs.org/en/advanced/navigation-guards.html
+    next()
   },
 
   methods: {

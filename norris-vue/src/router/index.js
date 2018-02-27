@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import History from '@/components/History'
 
 Vue.use(Router)
 
@@ -12,9 +13,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/jokes',
-      name: 'JokeList',
-      component: Home
+      path: '/history',
+      name: 'History',
+      component: History
     }
   ]
 })

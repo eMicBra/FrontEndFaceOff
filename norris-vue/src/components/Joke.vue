@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import JokeRepo from '../model/JokeRepo'
 
 export default {
@@ -35,11 +36,7 @@ export default {
       type: Array,
       default: () => ([])
     },
-    testing: true, // if true it will use mock service to enable offline development
-    jokeList: {
-      type: Array,
-      default: () => ([])
-    }
+    testing: true // if true it will use mock service to enable offline development
   },
 
   data () {
@@ -48,7 +45,8 @@ export default {
       randomJokeEnabled: true, // bound to the button
       randomCategory: '', // holds the current category to pass to the service
       currentJoke: {},
-      moveIndex: 0
+      moveIndex: 0,
+      timerHandle: 0
     }
   },
 
@@ -64,23 +62,31 @@ export default {
   },
 
   methods: {
+    ...mapMutations([
+      // Mounts the "addJoke" mutation to `this.incrementStoredNumber()`.
+      'addJoke'
+    ]),
+
     goBack () {
       this.moveIndex--
       this.go()
     },
+
     goNext () {
       this.moveIndex++
       this.go()
     },
+
     go () {
       if (this.moveIndex < 0) {
         this.moveIndex = 0
       }
-      if (this.moveIndex > this.jokeList.length - 1) {
-        this.moveIndex = this.jokeList.length - 1
+      if (this.moveIndex > this.$store.state.jokeList.length - 1) {
+        this.moveIndex = this.$store.state.jokeList.length - 1
       }
-      this.currentJoke = this.jokeList[this.moveIndex]
+      this.currentJoke = this.$store.state.jokeList[this.moveIndex]
     },
+
     jokeOn () { // method will determine if call to api should be made
       if (this.randomJokeEnabled) { // toggle must be on, maybe check for at least one category selected
         return true
@@ -94,11 +100,16 @@ export default {
       var repo = new JokeRepo(this.testing)
       repo.getJoke(this.randomCategory).then(function (joke) {
         vm.currentJoke = joke
-        // vm.jokeList.push(joke)
-        vm.$emit('add-joke', joke) // notify the parent that there is a new joke
-        vm.moveIndex = vm.jokeList.length - 1
+        // vm.$emit('add-joke', joke) // notify the parent that there is a new joke
+        vm.addJoke(joke)
+        vm.moveIndex = vm.$store.state.jokeList.length - 1
         console.log(`got joke: ${joke.value}`)
       })
+    },
+
+    prepareToExit: function () {
+      console.log("Preparing to exit sub component, stopping 'getting jokes'")
+      clearInterval(this.timerHandle)
     }
   },
 
@@ -108,7 +119,7 @@ export default {
 
     // Requirement #4
     // As a classic javascript developer, I want to make a random joke appear every so many (5?) seconds on the website.
-    setInterval(function () {
+    this.timerHandle = setInterval(function () {
       if (this.jokeOn()) {
         this.getJoke()
       }

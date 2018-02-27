@@ -6,6 +6,8 @@ import router from './router'
 
 import ToggleButton from 'vue-js-toggle-button'
 import BootstrapVue from 'bootstrap-vue'
+import store from './vuex/store'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/site.css'
@@ -17,6 +19,7 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
+  store, // inject store to all children
   el: '#app',
   router,
   components: { App },
