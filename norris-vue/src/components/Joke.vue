@@ -78,13 +78,16 @@ export default {
     },
 
     go () {
+      // the first joke is joke 0
       if (this.moveIndex < 0) {
-        this.moveIndex = 0
+        return;
       }
+      // if it is past the last one get another
       if (this.moveIndex > this.$store.state.jokeList.length - 1) {
-        this.moveIndex = this.$store.state.jokeList.length - 1
+        this.getJoke();
+        return;
       }
-      this.currentJoke = this.$store.state.jokeList[this.moveIndex]
+      this.currentJoke = this.$store.state.jokeList[this.moveIndex];
     },
 
     jokeOn () { // method will determine if call to api should be made
