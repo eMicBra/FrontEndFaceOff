@@ -34,7 +34,7 @@ export default {
   props: { // passed into component from parent using attributes
     selectedCategories: {
       type: Array,
-      default: () => ([])
+      default: () => []
     },
     testing: true // if true it will use mock service to enable offline development
   },
@@ -46,14 +46,15 @@ export default {
       randomCategory: '', // holds the current category to pass to the service
       currentJoke: {},
       moveIndex: 0,
-      timerHandle: 0
+      timerHandle: 0,
+      direction: 0 // direction to go 0 to go back and 1 to go forward
     }
   },
 
   watch: { // watching for change so when toggled and on it will get the next joke
     randomJokeEnabled: {
       handler: function (val, oldVal) {
-      // console.log('switch worked')
+        // console.log('switch worked')
         if (val) {
           this.getJoke()
         }
@@ -68,26 +69,30 @@ export default {
     ]),
 
     goBack () {
-      this.moveIndex--
+      this.direction = 0
       this.go()
     },
 
     goNext () {
-      this.moveIndex++
+      this.direction = 1
       this.go()
     },
 
     go () {
-      // the first joke is joke 0
-      if (this.moveIndex < 0) {
-        return;
+      if (!this.direction) { // previous
+        if (!(this.moveIndex <= 0)) {
+          this.moveIndex--
+          this.currentJoke = this.$store.state.jokeList[this.moveIndex]
+        }
+      } else { // next
+        // triggers request to get another joke from the service
+        if (this.moveIndex > this.$store.state.jokeList.length - 1) {
+          this.getJoke()
+        } else {
+          this.moveIndex++
+          this.currentJoke = this.$store.state.jokeList[this.moveIndex]
+        }
       }
-      // if it is past the last one get another
-      if (this.moveIndex > this.$store.state.jokeList.length - 1) {
-        this.getJoke();
-        return;
-      }
-      this.currentJoke = this.$store.state.jokeList[this.moveIndex];
     },
 
     jokeOn () { // method will determine if call to api should be made
@@ -100,8 +105,8 @@ export default {
     getJoke () {
       let vm = this
       // console.log("joke get joke")
-      var repo = new JokeRepo(this.testing)
-      repo.getJoke(this.randomCategory).then(function (joke) {
+      var repo = new JokeRepo(vm.testing)
+      repo.getJoke(vm.randomCategory).then(function (joke) {
         vm.currentJoke = joke
         // vm.$emit('add-joke', joke) // notify the parent that there is a new joke
         vm.addJoke(joke)
@@ -123,55 +128,54 @@ export default {
     // Requirement #4
     // As a classic javascript developer, I want to make a random joke appear every so many (5?) seconds on the website.
     this.timerHandle = setInterval(function () {
-      if (this.jokeOn()) {
-        this.getJoke()
-      }
-    }.bind(this), 10000)
-  },
-
-  mounted () {
+        if (this.jokeOn()) {
+          this.getJoke()
+        }
+      }.bind(this), 10000)
   }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  h1, h2 {
-    font-weight: normal;
-  }
+h1,
+h2 {
+  font-weight: normal;
+}
 
-  .outerJokeContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: #222;
-    min-height: 220px;
-  }
+.outerJokeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #222;
+  min-height: 220px;
+}
 
-  .innerJokeContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 15px;
-  }
+.innerJokeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 15px;
+}
 
-  .jokecategory {
-    align-self: flex-end;
-  }
+.jokecategory {
+  align-self: flex-end;
+}
 
-  .switchContainer {
-    padding-top: 10px;
-  }
+.switchContainer {
+  padding-top: 10px;
+}
 
-  .move {
-    background-color: #42b983;
-  }
+.move {
+  background-color: #42b983;
+}
 
-  .vue-js-switch#jokeSwitch {
-    font-size: 16px !important;
-  }
+.vue-js-switch#jokeSwitch {
+  font-size: 16px !important;
+}
 
-  .vue-js-switch {
-    margin: 2px;
-  }
+.vue-js-switch {
+  margin: 2px;
+}
 </style>
