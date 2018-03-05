@@ -15,8 +15,8 @@
       </div>
     </div>
 
-    <h2 class="title">{{msg}}</h2>
-    <img class="image" src="../assets/Chuck-Norris-HD.jpg">
+    <!-- <h2 class="title">{{msg}}</h2> -->
+    <!-- <img class="image" src="../assets/Chuck-Norris-HD.jpg"> -->
     <rjoke v-on:add-joke="addJoke" v-bind:testing="testing" v-bind:selectedCategories="passedCategories"
             v-bind:jokeList="jokeList" ref="myJoke"></rjoke>
     <hr />

@@ -5,32 +5,18 @@
      <table id="JokeList" class="table table-striped table-hover table-condensed">
         <thead>
           <tr>
-            <th style="text-align:left">Id</th>
             <th>Value</th>
             <th>Category</th>
-            <th>URL</th>
-            <th>&nbsp;</th>
+            <th>Id</th>
           </tr>
         </thead>
         <tbody>
           <!--
           // es6lint-disable-next-line -->
-          <tr v-for="joke in $store.state.jokeList">
-            <td style="text-align:left;">{{joke.id}}</td>
+          <tr v-for="(joke, i) in orderedJokes">
             <td>{{joke.value}}</td>
             <td>{{joke.category}}</td>
-            <td>{{joke.url}}</td>
-            <!-- <td>{{joke.YearBuilt}}</td>
-            <td>{{joke.YearLastRenovated}}</td>
-            <td>{{joke.GrossSqFt | utilNumberWithCommas }}</td>
-            <td>{{joke.InstructionalSqFt | utilNumberWithCommas }}</td>
-            <td>{{joke.ScapSqFt | utilNumberWithCommas }}</td>
-            <td>{{joke.OccupancyDate | utilFormatDate }}</td>
-            <td>{{joke.BoardAcceptDate | utilFormatDate }}</td> -->
-            <td>
-              <!-- <edit-icon v-if="!user.isReadOnly" v-bind:clickHandler="() => onJokeEditClicked(joke)" v-bind:dataValue="joke.Id" v-bind:hoverText="'Edit Joke'" />
-              <delete-icon v-if="!user.isReadOnly" v-bind:clickHandler="() => onJokeDeleteClicked(joke)" v-bind:dataValue="joke.Id" v-bind:hoverText="'Delete Joke'" /> -->
-            </td>
+            <td style="text-align:left;"><a v-bind:href="joke.url" target="_blank"> {{joke.id}}</a></td>
           </tr>
         </tbody>
       </table>
@@ -40,6 +26,8 @@
       </div>
     </template>
 <script>
+
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'History',
@@ -58,7 +46,8 @@ export default {
   computed: {
     jokesExist () {
       return this.$store.state.jokeList.length > 0
-    }
+    },
+    ...mapGetters(['orderedJokes'])
   }
 }
 </script>
@@ -78,7 +67,7 @@ export default {
   .table > thead > tr > th,
   .table > tfoot > tr > td,
   .table > tfoot > tr > th {
-    text-align: center;
+    text-align: left;
     vertical-align: middle;
   }
 

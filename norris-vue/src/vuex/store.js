@@ -13,7 +13,15 @@ const mutations = {
   }
 }
 
+const getters = {
+  orderedJokes: state => {
+    console.log('im getting the jokes from the store')
+    return state.jokeList.reverse()
+  }
+}
+
 export default new Vuex.Store({
   state,
-  mutations
+  mutations,
+  getters
 })
