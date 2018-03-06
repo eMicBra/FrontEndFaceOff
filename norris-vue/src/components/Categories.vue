@@ -14,8 +14,7 @@
               />
       </div>
     </div>
-    <div>{{passedCategories}}
-</div>
+    <!-- <div>{{passedCategories}}</div> -->
   </div>
 </template>
 

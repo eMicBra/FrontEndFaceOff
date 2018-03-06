@@ -16,14 +16,12 @@
     </div>
 
     <!-- <h2 class="title">{{msg}}</h2> -->
-    <!-- <img class="image" src="../assets/Chuck-Norris-HD.jpg"> -->
+    <img class="image" src="../assets/Chuck-Norris-HD.jpg">
     <rjoke v-on:add-joke="addJoke" v-bind:testing="testing" v-bind:selectedCategories="passedCategories"
             v-bind:jokeList="jokeList" ref="myJoke"></rjoke>
     <hr />
-    <Cat v-bind:testing="testing">
+    <Cat v-bind:testing="testing" v-on:selectedCategories-changed="updateCategoryList">
     </Cat>
-
-    <!-- <history v-bind:jokeList="jokeList"></history> -->
 
   </div>
 </template>
@@ -47,7 +45,7 @@ export default {
     return {
       msg: 'Chuck Norris Vue(s)',
       testing: true,
-      passedCategories: ['pig', 'cow'],
+      passedCategories: [''],
       jokeList: []
     }
   },
@@ -63,6 +61,9 @@ export default {
   methods: {
     addJoke (joke) {
       this.jokeList.push(joke)
+    },
+    updateCategoryList (categories) {
+      this.passedCategories = categories
     }
   }
 }

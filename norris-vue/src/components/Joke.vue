@@ -7,7 +7,7 @@
           <h2>{{ currentJoke.value }}</h2>
         </div>
         <div class="jokecategory">
-          <!-- {{ randomCategory }}  -->{{selectedCategories}}
+          {{ randomCategory }} 
         </div>
       </div>
         <button class="btn move" v-on:click="goNext">Next</button>
@@ -20,7 +20,7 @@
           :labels="{checked: 'NORRIS JOKES ON!!!', unchecked: 'I can not take anymore'}"
           />
     </div>
-    index {{moveIndex}}
+    <!-- index {{moveIndex}} -->
   </div>
 </template>
 
@@ -102,9 +102,20 @@ export default {
       return false
     },
 
+    getRandomCategory () {
+      let vm = this
+      if (vm.selectedCategories.length > 0) {
+        var randomNumber = Math.floor(Math.random() * vm.selectedCategories.length)
+        vm.randomCategory = vm.selectedCategories[randomNumber]
+      }
+      else {
+        vm.randomCategory = ''
+      }
+    },
+
     getJoke () {
       let vm = this
-      // console.log("joke get joke")
+      vm.getRandomCategory()
       var repo = new JokeRepo(vm.testing)
       repo.getJoke(vm.randomCategory).then(function (joke) {
         vm.currentJoke = joke
