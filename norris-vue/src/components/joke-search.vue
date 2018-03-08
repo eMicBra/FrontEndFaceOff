@@ -27,14 +27,14 @@
                 <div class="col">
                     <div class="row">
                         <div class="col-2">
-                            Total Results: {{searchResult.total}}
+                            <b>Total Results:</b> {{searchResult.total}}
                         </div>
                     </div>
+                    <hr style="background-color: white;">
                     <div v-for="joke in searchResult.result" :key="joke.id" class="row">
-                        <div class="col-8">
-                            {{joke.value.trim()}}
-                        </div>
-                    </div>
+                        <ul class="col-8">
+                            <li>{{joke.value.trim()}}</li>
+                        </ul>
                     </div>
                 </div>
             </div>
