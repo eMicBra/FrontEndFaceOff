@@ -1,31 +1,34 @@
 <template>
-  <div>
-
-    <section class="hero" style="position: relative;">
-      <div id="hero-video">
-        <video autoplay="" muted="" style="margin: auto; position: absolute; z-index: 5; top: 50%; left: 50%; transform: translate(-50%, -50%); visibility: visible; opacity: 1; width: auto; height: 924px;">
-          <!-- <source src="https://chucknorris.com/assets/themes/chuck-norris/videos/chucknorris.mp4" type="video/mp4"> -->
-          <source src="../assets/chucknorris.mp4" type="video/mp4">
-          <source src="https://chucknorris.com/assets/themes/chuck-norris/videos/chucknorris.webm" type="video/webm">
-          <source src="https://chucknorris.com/assets/themes/chuck-norris/videos/chucknorris.ogv" type="video/ogg">
-        </video>
+  <div class="row">
+    <div class="col-sm">
+      <div class="toggleRow">
+        <div class="rowItem">I <img src="../assets/heart.png" style="width: 20px;"> Autostart Videos - </div>
+        <div class="rowItem">
+          <div class="toggleButton">
+            <div>No&nbsp;</div>&nbsp;
+            <toggle-button id="videoSwitch"
+                          v-model="videoEnabled"
+                          :width="40" :height="20"
+                          :color="{checked: 'green', unchecked: 'gray'}" />
+            &nbsp;<div>&nbsp;Yes</div>
+          </div>
+        </div>
       </div>
-    </section>
-
-    <div class="toggleRow">
-      <div class="rowItem">I <img src="../assets/heart.png" style="width: 20px;"> Autostart Videos - </div>
-      <div class="rowItem">
-        <div class="toggleButton">
-          <div>No&nbsp;</div>&nbsp;
-          <toggle-button id="videoSwitch"
-                         v-model="videoEnabled"
-                         :width="40" :height="20"
-                         :color="{checked: 'green', unchecked: 'gray'}" />
-          &nbsp;<div>&nbsp;Yes</div>
+      <div class="row">
+        <div class="col-sm">
+          <section class="hero row" style="position: relative;">
+            <div id="hero-video">
+              <video autoplay="" muted="" style="margin: auto; position: absolute; z-index: 5; top: 50%; left: 50%; transform: translate(-50%, -50%); visibility: visible; opacity: 1; width: auto; height: 900px;">
+                <!-- <source src="https://chucknorris.com/assets/themes/chuck-norris/videos/chucknorris.mp4" type="video/mp4"> -->
+                <source src="../assets/chucknorris.mp4" type="video/mp4">
+                <source src="https://chucknorris.com/assets/themes/chuck-norris/videos/chucknorris.webm" type="video/webm">
+                <source src="https://chucknorris.com/assets/themes/chuck-norris/videos/chucknorris.ogv" type="video/ogg">
+              </video>
+            </div>
+          </section>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -93,8 +96,8 @@ export default {
   #hero-video {
     position: absolute;
     z-index: 5;
-    height: 921.6px;
-    top: 0px;
+    height: 900px;
+    top: 25px;
     left: 0px;
     bottom: 0px;
     right: 0px;

@@ -1,20 +1,22 @@
 <template>
-  <div>
-    <h2>Joke Categories</h2>
-    <div class="container categories">
-      <!--
-      // es6lint-disable-next-line -->
-      <div v-for="(cat, i) in categories">
-        <toggle-button class="categorySwitch"
-              v-model="cat.Include"
-              :key="i"
-              :width="switchWidth" :height="switchHeight"
-              :color="{checked: 'green', unchecked: 'gray'}"
-              :labels="{checked: cat.Name, unchecked: cat.Name}"
-              />
+  <div class="row">
+    <div class="col">
+      <h2>Joke Categories</h2>
+      <div class="container categories">
+        <!--
+        // es6lint-disable-next-line -->
+        <div v-for="(cat, i) in categories">
+          <toggle-button class="categorySwitch"
+                v-model="cat.Include"
+                :key="i"
+                :width="switchWidth" :height="switchHeight"
+                :color="{checked: 'green', unchecked: 'gray'}"
+                :labels="{checked: cat.Name, unchecked: cat.Name}"
+                />
+        </div>
       </div>
+      <!-- <div>{{passedCategories}}</div> -->
     </div>
-    <!-- <div>{{passedCategories}}</div> -->
   </div>
 </template>
 

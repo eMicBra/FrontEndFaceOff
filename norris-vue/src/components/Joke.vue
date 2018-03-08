@@ -1,26 +1,36 @@
 <template>
-  <div>
-    <div class="outerJokeContainer">
-        <button class="btn move" v-on:click="goBack">Prev</button>
-      <div class="innerJokeContainer">
-        <div>
-          <h2>{{ currentJoke.value }}</h2>
-        </div>
-        <div class="jokecategory">
-          {{ randomCategory }} 
+  <div class="row">
+    <div class="col">
+      <div class="row justify-content-center">
+        <div class="col-8">
+          <div class="outerJokeContainer">
+              <button class="btn move" v-on:click="goBack">Prev</button>
+            <div class="innerJokeContainer">
+              <div>
+                <h2>{{ currentJoke.value }}</h2>
+              </div>
+              <div class="jokecategory">
+                {{ randomCategory }} 
+              </div>
+            </div>
+              <button class="btn move" v-on:click="goNext">Next</button>
+          </div>
         </div>
       </div>
-        <button class="btn move" v-on:click="goNext">Next</button>
+      <div class="row">
+        <div class="col">
+          <div class="switchContainer">
+            <toggle-button id="jokeSwitch"
+                v-model="randomJokeEnabled"
+                :width="250" :height="40"
+                :color="{checked: 'green', unchecked: 'gray'}"
+                :labels="{checked: 'NORRIS JOKES ON!!!', unchecked: 'I can not take anymore'}"
+                />
+          </div>
+          <!-- index {{moveIndex}} -->
+        </div>
+      </div>
     </div>
-    <div class="switchContainer">
-      <toggle-button id="jokeSwitch"
-          v-model="randomJokeEnabled"
-          :width="250" :height="40"
-          :color="{checked: 'green', unchecked: 'gray'}"
-          :labels="{checked: 'NORRIS JOKES ON!!!', unchecked: 'I can not take anymore'}"
-          />
-    </div>
-    <!-- index {{moveIndex}} -->
   </div>
 </template>
 

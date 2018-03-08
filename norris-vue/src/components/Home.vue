@@ -1,28 +1,32 @@
 <template>
-  <div>
-    <coolVideo></coolVideo>
-    <div class="toggleRow">
-      <div class="rowItem">Local Mode - </div>
-      <div class="rowItem">
-        <div class="toggleButton">
-          <div>Off&nbsp;</div>&nbsp;
-          <toggle-button id="testingSwitch"
-                         v-model="testing"
-                         :width="40" :height="20"
-                         :color="{checked: 'green', unchecked: 'gray'}" />
-          &nbsp;<div>&nbsp;On</div>
+  <div class="row">
+    <div class="col">
+      <cool-video></cool-video>
+      <div class="toggleRow">
+        <div class="rowItem">Local Mode - </div>
+        <div class="rowItem">
+          <div class="toggleButton">
+            <div>Off&nbsp;</div>&nbsp;
+            <toggle-button id="testingSwitch"
+                          v-model="testing"
+                          :width="40" :height="20"
+                          :color="{checked: 'green', unchecked: 'gray'}" />
+            &nbsp;<div>&nbsp;On</div>
+          </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col">
+          <img class="image" src="../assets/Chuck-Norris-HD.jpg">
+        </div>
+      </div>
+      <rjoke v-on:add-joke="addJoke" v-bind:testing="testing" v-bind:selectedCategories="passedCategories"
+              v-bind:jokeList="jokeList" ref="myJoke"></rjoke>
+      <hr />
+      <Cat v-bind:testing="testing" v-on:selectedCategories-changed="updateCategoryList">
+      </Cat>
+
     </div>
-
-    <!-- <h2 class="title">{{msg}}</h2> -->
-    <img class="image" src="../assets/Chuck-Norris-HD.jpg">
-    <rjoke v-on:add-joke="addJoke" v-bind:testing="testing" v-bind:selectedCategories="passedCategories"
-            v-bind:jokeList="jokeList" ref="myJoke"></rjoke>
-    <hr />
-    <Cat v-bind:testing="testing" v-on:selectedCategories-changed="updateCategoryList">
-    </Cat>
-
   </div>
 </template>
 
